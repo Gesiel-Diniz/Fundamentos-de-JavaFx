@@ -1,0 +1,73 @@
+package org.agenda.repositorios.impl;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.agenda.entidades.Contato;
+import org.agenda.fabricas.FabricaConexaoJdbc;
+import org.agenda.repositorios.interfaces.AgendaRepositorio;
+
+public class ContatoRepositorioJdbc implements AgendaRepositorio<Contato>{
+
+	@Override
+	public List<Contato> selecionar() throws SQLException, IOException {
+		
+		Connection conexao = null;
+		List<Contato> contatos = new ArrayList<Contato>();
+
+		try {
+
+			conexao = FabricaConexaoJdbc.criarConexao();
+			
+			Statement state = conexao.createStatement();
+			ResultSet rs = state.executeQuery("SELECT * FROM contatos ORDER BY id DESC");
+
+			while(rs.next()) {
+				
+				Contato contato = new Contato();
+				contato.setId(rs.getInt("id"));
+				contato.setNome(rs.getString("nome"));
+				contato.setTelefone(rs.getString("telefone"));
+				contato.setIdade(rs.getInt("idade"));
+				
+				contatos.add(contato);
+				
+			}
+		}catch(Exception e) {
+				
+			System.out.println("Resp "+conexao);
+
+		} finally {
+			if(conexao != null) {
+				conexao.close();
+			}
+			
+		}
+		
+		return contatos;
+	}
+
+	@Override
+	public void inserir(Contato entidade) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void atualizar(Contato entidade) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void excluir(Contato entidade) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

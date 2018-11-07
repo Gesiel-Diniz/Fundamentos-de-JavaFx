@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.cell.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<VBox maxHeight="420.0" maxWidth="600.0" minHeight="420.0" minWidth="600.0" prefHeight="420.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.agenda.MainController">
+	   <children>
+	      <Pane prefHeight="30.0" prefWidth="600.0" style="-fx-background-color: #bbb;">
+	         <children>
+	            <Label layoutX="14.0" layoutY="3.0" text="Minha agenda">
+	               <font>
+	                  <Font name="System Bold" size="18.0" />
+	               </font>
+	            </Label>
+	         </children>
+	      </Pane>
+	      <Pane prefHeight="221.0" prefWidth="600.0" style="-fx-background-color: #eee;">
+	         <children>
+	            <TableView fx:id="tabelaContatos" layoutX="14.0" layoutY="12.0" prefHeight="155.0" prefWidth="600.0">
+	              <columns>
+	              	<TableColumn editable="false" prefWidth="37.0" text="Id">
+	                	<cellValueFactory>
+	                		<PropertyValueFactory property="id" />
+	                	</cellValueFactory>
+	                </TableColumn>
+	                <TableColumn editable="false" prefWidth="312.0" text="Nome">
+	                	<cellValueFactory>
+	                		<PropertyValueFactory property="nome" />
+	                	</cellValueFactory>
+	                </TableColumn>
+	                <TableColumn prefWidth="46.0" text="Idade">
+	                	<cellValueFactory>
+	                		<PropertyValueFactory property="idade" />
+	                	</cellValueFactory>
+	                </TableColumn>
+	                  <TableColumn prefWidth="202.0" text="Telefone">
+	                  	<cellValueFactory>
+	                		<PropertyValueFactory property="telefone" />
+	                	</cellValueFactory>
+	                  </TableColumn>
+	              </columns>
+	            </TableView>
+	            <Button fx:id="botaoInserir" layoutX="206.0" layoutY="187.0" mnemonicParsing="false" onAction="#botaoInserir_Action" prefHeight="25.0" prefWidth="121.0" text="Incluir" />
+	            <Button fx:id="botaoAlterar" layoutX="336.0" layoutY="187.0" mnemonicParsing="false" onAction="#botaoAlterar_Action" prefHeight="25.0" prefWidth="121.0" text="Alterar" />
+	            <Button fx:id="botaoExcluir" layoutX="465.0" layoutY="187.0" mnemonicParsing="false" onAction="#botaoExcluir_Action" prefHeight="20.0" prefWidth="121.0" text="Excluir" />
+	         </children>
+	      </Pane>
+	      <TitledPane collapsible="false" prefHeight="170.0" prefWidth="600.0" text="Informações de contato">
+	         <content>
+	            <GridPane>
+	              <columnConstraints>
+	                <ColumnConstraints hgrow="SOMETIMES" maxWidth="325.0" minWidth="10.0" prefWidth="279.0" />
+	                <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="10.0" prefWidth="107.0" />
+	                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+	              </columnConstraints>
+	              <rowConstraints>
+	                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+	                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+	                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+	              </rowConstraints>
+	               <children>
+	                  <Label text="Nome:" />
+	                  <Label text="Idade" GridPane.columnIndex="1" />
+	                  <Label text="Telefone" GridPane.columnIndex="2" />
+	                  <TextField fx:id="txfNome" GridPane.rowIndex="1">
+	                     <GridPane.margin>
+	                        <Insets right="10.0" />
+	                     </GridPane.margin>
+	                  </TextField>
+	                  <TextField fx:id="txfIdeda" GridPane.columnIndex="1" GridPane.rowIndex="1">
+	                     <GridPane.margin>
+	                        <Insets right="10.0" />
+	                     </GridPane.margin>
+	                  </TextField>
+	                  <TextField fx:id="txfTelefone" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+	                  <Button fx:id="botaoSalvar" mnemonicParsing="false" onAction="#botaoSalvar_Action" prefHeight="25.0" prefWidth="130.0" text="Salvar" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+	                  <Button fx:id="botaoCancelar" mnemonicParsing="false" onAction="#botaoCancelar_Action" prefHeight="25.0" prefWidth="128.0" text="Cancelar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+	               </children>
+	            </GridPane>
+	         </content>
+	      </TitledPane>
+	   </children>
+	</VBox>

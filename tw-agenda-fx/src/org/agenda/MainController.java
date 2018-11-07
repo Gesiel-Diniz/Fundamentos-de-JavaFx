@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.agenda.entidades.Contato;
-import org.agenda.repositorios.impl.ContatoRepositorio;
+import org.agenda.repositorios.impl.ContatoRepositorioJdbc;
 import org.agenda.repositorios.interfaces.AgendaRepositorio;
 
 import javafx.collections.FXCollections;
@@ -34,6 +34,9 @@ public class MainController implements Initializable{
 	
 	@FXML
 	private Button botaoExcluir;
+	
+	@FXML
+	private TextField txfId;
 	
 	@FXML
 	private TextField txfNome;
@@ -79,6 +82,7 @@ public class MainController implements Initializable{
 		
 		this.ehInserir = true;
 		
+		this.txfId.setText("");
 		this.txfNome.setText("");
 		this.txfIdeda.setText("");
 		this.txfTelefone.setText("");
@@ -97,10 +101,27 @@ public class MainController implements Initializable{
 
 		Optional<ButtonType> resultadoConfirm = confirm.showAndWait();
 		if (resultadoConfirm.isPresent() && resultadoConfirm.get() == ButtonType.OK) {
+			
+			try {
 
-			AgendaRepositorio<Contato> repositorioContato = new ContatoRepositorio();
-			repositorioContato.excluir(contatoSelecionado);
-			carregarTabelaContatos();
+				AgendaRepositorio<Contato> repositorioContato = new ContatoRepositorioJdbc();
+				repositorioContato.excluir(contatoSelecionado);
+				carregarTabelaContatos();
+				
+				this.txfId.setText("");
+				this.txfNome.setText("");
+				this.txfIdeda.setText("");
+				this.txfTelefone.setText("");
+			
+			} catch (Exception e) {
+				
+				Alert confirmErro = new Alert(AlertType.ERROR);
+				confirmErro.setTitle("Erro!");
+				confirmErro.setHeaderText("Erro no banco de dados");
+				confirmErro.setContentText("Erro ao excluir o contato: "+ e.getMessage());
+				
+				confirmErro.showAndWait();
+			}
 
 		}
 
@@ -108,23 +129,36 @@ public class MainController implements Initializable{
 	
 	public void botaoSalvar_Action() {
 		
-		AgendaRepositorio<Contato> repositorioContato = new ContatoRepositorio();
-		Contato contato = new Contato();
-		
-		contato.setNome(txfNome.getText());
-		contato.setIdade(Integer.parseInt(txfIdeda.getText()));
-		contato.setTelefone(txfTelefone.getText());
-		
-		if(this.ehInserir) {
-			repositorioContato.inserir(contato);
-		}else {
-			repositorioContato.atualizar(contato);
-		}
+		try {
 
-		habilitarEdicaoAgenda(false);
-		carregarTabelaContatos();
+			AgendaRepositorio<Contato> repositorioContato = new ContatoRepositorioJdbc();
+			Contato contato = new Contato();
+			
+			
+			contato.setNome(txfNome.getText());
+			contato.setIdade(Integer.parseInt(txfIdeda.getText()));
+			contato.setTelefone(txfTelefone.getText());
+			
+			if(this.ehInserir) {
+				repositorioContato.inserir(contato);
+			}else {
+				contato.setId(Integer.parseInt(txfId.getText()));
+				repositorioContato.atualizar(contato);
+			}
+	
+			habilitarEdicaoAgenda(false);
+			carregarTabelaContatos();
+			
+			this.tabelaContatos.getSelectionModel().selectFirst();
 		
-		this.tabelaContatos.getSelectionModel().selectFirst();
+		} catch (Exception e) {
+			Alert confirm = new Alert(AlertType.ERROR);
+			confirm.setTitle("Erro!");
+			confirm.setHeaderText("Erro no banco de dados");
+			confirm.setContentText("Erro ao salvar o contato: "+ e.getMessage());
+			
+			confirm.showAndWait();
+		}
 		
 	}
 	
@@ -149,6 +183,7 @@ public class MainController implements Initializable{
 		
 		this.tabelaContatos.getSelectionModel().selectedItemProperty().addListener((observable, contatoAntigo, contatoNovo)->{
 			if(contatoNovo != null) {
+				this.txfId.setText(String.valueOf(contatoNovo.getId()));
 				this.txfNome.setText(contatoNovo.getNome());
 				this.txfIdeda.setText(String.valueOf(contatoNovo.getIdade()));
 				this.txfTelefone.setText(contatoNovo.getTelefone());
@@ -163,23 +198,25 @@ public class MainController implements Initializable{
 	
 	private void carregarTabelaContatos() {
 		
-		AgendaRepositorio<Contato> repositorioContato = new ContatoRepositorio();
-		List<Contato> contatos = repositorioContato.selecionar();
+		try {
+
+			AgendaRepositorio<Contato> repositorioContato = new ContatoRepositorioJdbc();
+			List<Contato> contatos = repositorioContato.selecionar();
+			
+			ObservableList<Contato> contatosObservableList = FXCollections.observableList(contatos);
+			
+			this.tabelaContatos.getItems().setAll(contatosObservableList);
 		
-		if(contatos.isEmpty()) {
-			Contato contato = new Contato();
+		} catch (Exception e) {
 			
-			contato.setNome("TreinaWeb");
-			contato.setIdade(12);
-			contato.setTelefone("123456");
+			Alert confirm = new Alert(AlertType.ERROR);
+			confirm.setTitle("Erro!");
+			confirm.setHeaderText("Erro no banco de dados");
+			confirm.setContentText("Erro ao obter a lista de contatos, "+ e.getMessage());
 			
-			contatos.add(contato);
+			confirm.showAndWait();
 			
 		}
-		
-		ObservableList<Contato> contatosObservableList = FXCollections.observableList(contatos);
-		
-		this.tabelaContatos.getItems().setAll(contatosObservableList);
  		
 	}
 	

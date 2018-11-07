@@ -1,0 +1,5 @@
+package org.agenda.fabricas;
+
+public class FabricaConexaoJdbc {
+
+}

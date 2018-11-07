@@ -1,0 +1,55 @@
+package org.agenda.repositorios.impl;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.agenda.entidades.Contato;
+import org.agenda.repositorios.interfaces.AgendaRepositorio;
+
+public class ContatoRepositorioJdbc implements AgendaRepositorio<Contato>{
+
+	@Override
+	public List<Contato> selecionar() throws SQLException {
+		Connection conexao = null;
+		conexao = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/tw_jdbc", "root", "");
+		
+		Statement state = conexao.createStatement();
+		ResultSet rs = state.executeQuery("SELECT * FROM contatos ORDER BY id DESC");
+		
+		private static List<Contato> contatos = new ArrayList<Contato>();
+		
+		
+		while(rs.next()) {
+			
+			Contato contato = new Contato();
+			contato.setId(rs.getInt("id"));
+			
+		}
+		
+		return null;
+	}
+
+	@Override
+	public void inserir(Contato entidade) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void atualizar(Contato entidade) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void excluir(Contato entidade) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -1,0 +1,8 @@
+package org.agenda.repositorios.impl;
+
+import org.agenda.entidades.Contato;
+import org.agenda.repositorios.interfaces.AgendaRepositorio;
+
+public class ContatoRepositorioJdbc implements AgendaRepositorio<Contato>{
+
+}

@@ -22,19 +22,24 @@
 	      </Pane>
 	      <Pane prefHeight="221.0" prefWidth="600.0" style="-fx-background-color: #eee;">
 	         <children>
-	            <TableView fx:id="tabelaContatos" layoutX="14.0" layoutY="12.0" prefHeight="155.0" prefWidth="570.0">
+	            <TableView fx:id="tabelaContatos" layoutX="14.0" layoutY="12.0" prefHeight="155.0" prefWidth="600.0">
 	              <columns>
-	                <TableColumn editable="false" prefWidth="352.0" text="Nome">
+	              	<TableColumn editable="false" prefWidth="37.0" text="Id">
+	                	<cellValueFactory>
+	                		<PropertyValueFactory property="id" />
+	                	</cellValueFactory>
+	                </TableColumn>
+	                <TableColumn editable="false" prefWidth="312.0" text="Nome">
 	                	<cellValueFactory>
 	                		<PropertyValueFactory property="nome" />
 	                	</cellValueFactory>
 	                </TableColumn>
-	                <TableColumn prefWidth="74.0" text="Idade">
+	                <TableColumn prefWidth="46.0" text="Idade">
 	                	<cellValueFactory>
 	                		<PropertyValueFactory property="idade" />
 	                	</cellValueFactory>
 	                </TableColumn>
-	                  <TableColumn prefWidth="146.0" text="Telefone">
+	                  <TableColumn prefWidth="202.0" text="Telefone">
 	                  	<cellValueFactory>
 	                		<PropertyValueFactory property="telefone" />
 	                	</cellValueFactory>
@@ -60,7 +65,7 @@
 	                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 	              </rowConstraints>
 	               <children>
-	                  <Label text="Nome:" />
+	                  <Label text="Nome" />
 	                  <Label text="Idade" GridPane.columnIndex="1" />
 	                  <Label text="Telefone" GridPane.columnIndex="2" />
 	                  <TextField fx:id="txfNome" GridPane.rowIndex="1">
@@ -76,6 +81,7 @@
 	                  <TextField fx:id="txfTelefone" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 	                  <Button fx:id="botaoSalvar" mnemonicParsing="false" onAction="#botaoSalvar_Action" prefHeight="25.0" prefWidth="130.0" text="Salvar" GridPane.columnIndex="2" GridPane.rowIndex="2" />
 	                  <Button fx:id="botaoCancelar" mnemonicParsing="false" onAction="#botaoCancelar_Action" prefHeight="25.0" prefWidth="128.0" text="Cancelar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  	<TextField fx:id="txfId" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="20.0" visible="false" GridPane.rowIndex="2" />
 	               </children>
 	            </GridPane>
 	         </content>

@@ -1,0 +1,35 @@
+package org.agenda.repositorios.impl;
+
+import java.sql.Connection;
+import java.util.List;
+
+import org.agenda.entidades.Contato;
+import org.agenda.repositorios.interfaces.AgendaRepositorio;
+
+public class ContatoRepositorioJdbc implements AgendaRepositorio<Contato>{
+
+	@Override
+	public List<Contato> selecionar() {
+		Connection conexao = null;
+		return null;
+	}
+
+	@Override
+	public void inserir(Contato entidade) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void atualizar(Contato entidade) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void excluir(Contato entidade) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
